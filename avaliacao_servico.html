@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação de Serviço - Conecta Serviços</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .rating-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .stars {
+            font-size: 24px;
+            color: #ddd;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+
+        .stars .fa-star.active {
+            color: #ffd700;
+        }
+
+        .comment-box {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .rating-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .service-details {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-small">
+                <img src="image/Logo.png" alt="Conecta Serviços">
+            </div>
+        </div>
+    </header>
+
+    <div class="rating-container">
+        <div class="service-details">
+            <h2>Avaliação do Serviço</h2>
+            <p>Profissional: <span id="profissionalNome">Nome do Profissional</span></p>
+            <p>Serviço: <span id="servicoTipo">Tipo do Serviço</span></p>
+            <p>Data: <span id="servicoData">Data do Serviço</span></p>
+        </div>
+
+        <form id="avaliacaoForm">
+            <div class="stars">
+                <i class="fas fa-star" data-value="1"></i>
+                <i class="fas fa-star" data-value="2"></i>
+                <i class="fas fa-star" data-value="3"></i>
+                <i class="fas fa-star" data-value="4"></i>
+                <i class="fas fa-star" data-value="5"></i>
+            </div>
+
+            <textarea class="comment-box" placeholder="Deixe seu comentário sobre o serviço (opcional)" rows="4"></textarea>
+
+            <button type="submit" class="submit-btn">Enviar Avaliação</button>
+        </form>
+
+        <div class="rating-info">
+            <h3>Avaliações Anteriores</h3>
+            <p>Média geral: <strong id="mediaGeral">4.5</strong> <i class="fas fa-star" style="color: #ffd700;"></i></p>
+            <div id="avaliacoesAnteriores"></div>
+        </div>
+    </div>
+
+    <script>
+        // Recuperar parâmetros da URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Preencher dados do profissional
+        document.getElementById('profissionalNome').textContent = getUrlParameter('name');
+        document.getElementById('servicoTipo').textContent = getUrlParameter('profissao');
+        document.getElementById('servicoData').textContent = new Date().toLocaleDateString();
+        // Sistema de estrelas
+        const stars = document.querySelectorAll('.stars .fa-star');
+        let selectedRating = 0;
+
+        stars.forEach(star => {
+            star.addEventListener('mouseover', function() {
+                const value = this.dataset.value;
+                highlightStars(value);
+            });
+
+            star.addEventListener('click', function() {
+                selectedRating = this.dataset.value;
+                highlightStars(selectedRating);
+            });
+
+            star.addEventListener('mouseout', function() {
+                highlightStars(selectedRating);
+            });
+        });
+
+        function highlightStars(value) {
+            stars.forEach(star => {
+                star.classList.toggle('active', star.dataset.value <= value);
+            });
+        }
+
+        // Envio do formulário
+        document.getElementById('avaliacaoForm').onsubmit = function(e) {
+            e.preventDefault();
+            if (!selectedRating) {
+                alert('Por favor, selecione uma avaliação em estrelas.');
+                return;
+            }
+
+            // Aqui você implementaria a lógica para salvar a avaliação
+            const comentario = document.querySelector('.comment-box').value;
+            
+            // Simulação de envio
+            alert('Avaliação enviada com sucesso!');
+            window.location.href = 'tela_principal.html';
+        };
+
+        // Função para carregar avaliações anteriores (simulado)
+        function carregarAvaliacoes() {
+            const avaliacoes = [
+                { estrelas: 5, comentario: "Excelente trabalho! Muito profissional.", data: "2023-11-01" },
+                { estrelas: 4, comentario: "Bom serviço, recomendo.", data: "2023-10-28" }
+            ];
+
+            const container = document.getElementById('avaliacoesAnteriores');
+            avaliacoes.forEach(av => {
+                const div = document.createElement('div');
+                div.style.margin = '10px 0';
+                div.style.padding = '10px';
+                div.style.borderBottom = '1px solid #eee';
+                
+                const stars = '★'.repeat(av.estrelas) + '☆'.repeat(5-av.estrelas);
+                div.innerHTML = `
+                    <div style="color: #ffd700;">${stars}</div>
+                    <div style="margin: 5px 0;">${av.comentario}</div>
+                    <small style="color: #666;">${av.data}</small>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Carregar avaliações ao iniciar a página
+        carregarAvaliacoes();
+    </script>
+</body>
+</html>

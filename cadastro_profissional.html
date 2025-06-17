@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Profissional - Conecta Serviços</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .portfolio-upload {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-small">
+                <img src="image/Logo.png" alt="Conecta Serviços">
+            </div>
+        </div>
+    </header>
+
+    <div class="form-container">
+        <h2>Cadastro de Profissional</h2>
+        <form id="profissionalForm">
+            <div class="form-group">
+                <label>Nome Completo</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" required>
+            </div>
+            <div class="form-group">
+                <label>Telefone</label>
+                <input type="tel" required>
+            </div>
+            <div class="form-group">
+                <label>Área de Atuação</label>
+                <select required>
+                    <option value="">Selecione...</option>
+                    <option>Eletricista</option>
+                    <option>Encanador</option>
+                    <option>Pedreiro</option>
+                    <option>Pintor</option>
+                    <option>Limpeza</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Descrição dos Serviços</label>
+                <textarea rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Experiência (anos)</label>
+                <input type="number" min="0" required>
+            </div>
+            <div class="form-group">
+                <label>Empresa Parceira Preferida</label>
+                <input type="text" placeholder="Ex: Nome da empresa de tintas, materiais de construção, etc.">
+                <small style="color: #666; display: block; margin-top: 5px;">Informe a empresa que você mais gosta de trabalhar em parceria</small>
+            </div>
+            <div class="portfolio-upload">
+                <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                <p>Arraste fotos do seu trabalho ou clique para selecionar</p>
+                <input type="file" multiple accept="image/*">
+            </div>
+            <button type="submit" class="submit-btn">Cadastrar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('profissionalForm').onsubmit = function(e) {
+            e.preventDefault();
+            alert('Cadastro simulado com sucesso!');
+            window.location.href = 'tela_principal.html';
+        };
+    </script>
+</body>
+</html>

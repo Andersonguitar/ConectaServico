@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Profissional - Conecta Serviços</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .profile-container {
+            max-width: 1000px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-info h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .rating-large {
+            font-size: 24px;
+            color: #ffd700;
+        }
+
+        .services-section {
+            margin: 30px 0;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .review-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            padding: 12px 25px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .chat-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .schedule-btn {
+            background: #28a745;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-small">
+                <img src="image/Logo.png" alt="Conecta Serviços">
+            </div>
+        </div>
+    </header>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="image/eletricista.jpg" alt="Foto do Profissional" class="profile-photo">
+            <div class="profile-info">
+                <h1>Ricardo Oliveira</h1>
+                <p>Eletricista Profissional</p>
+                <div class="rating-large">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span style="color: #666">4.9 (120 avaliações)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="services-section">
+            <h2>Serviços Oferecidos</h2>
+            <ul id="services-list">
+                <li>Instalações Elétricas Residenciais e Comerciais</li>
+                <li>Manutenção Preventiva</li>
+                <li>Instalação de Painéis Solares</li>
+                <li>Projetos Elétricos</li>
+            </ul>
+        </div>
+
+        <div class="portfolio-section" id="portfolio-section" style="display: none;">
+            <h2>Portfólio de Trabalhos</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="trabalhos/ar1.jpg" alt="Instalação de Ar Condicionado 1">
+                </div>
+                <div class="portfolio-item">
+                    <img src="trabalhos/ar2.jpg" alt="Instalação de Ar Condicionado 2">
+                </div>
+                <div class="portfolio-item">
+                    <img src="trabalhos/ar3.png" alt="Instalação de Ar Condicionado 3">
+                </div>
+            </div>
+        </div>
+
+        <div class="reviews-section">
+            <h2>Avaliações Recentes</h2>
+            <div class="review-card">
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"Excelente profissional, muito pontual e organizado. Resolveu o problema rapidamente."</p>
+                <small>- Maria Silva, há 2 dias</small>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-btn chat-btn"
+                onclick="window.location.href='chat.html?prof=' + getUrlParameter('prof') + '&name=' + encodeURIComponent(document.querySelector('.profile-info h1').textContent) + '&photo=' + encodeURIComponent(document.querySelector('.profile-photo').src)"><i
+                    class="fas fa-comment"></i> Iniciar Chat</button>
+            <button class="action-btn chat-btn"
+                onclick="window.location.href='calendar.html?prof=' + getUrlParameter('prof') + '&name=' + encodeURIComponent(document.querySelector('.profile-info h1').textContent) + '&photo=' + encodeURIComponent(document.querySelector('.profile-photo').src)"><i
+                    class="fas fa-calendar"></i> Verificar Agenda</button>
+            <button class="action-btn chat-btn"
+                onclick="window.location.href='avaliacao_servico.html?prof=' + getUrlParameter('prof') + '&name=' + encodeURIComponent(document.querySelector('.profile-info h1').textContent) + '&profissao=' + encodeURIComponent(document.querySelector('.profile-info p').textContent) + '&photo=' + encodeURIComponent(document.querySelector('.profile-photo').src)"><i
+                    class="fas fa-star"></i> Avaliar Serviço</button>
+        </div>
+    </div>
+    <script>
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        const profissionaisData = {
+            'eletricista': {
+                nome: 'Ricardo Oliveira',
+                profissao: 'Eletricista Profissional',
+                foto: 'image/eletricista.jpg',
+                avaliacao: 4.9,
+                numAvaliacoes: 120,
+                servicos: [
+                    'Instalações Elétricas Residenciais e Comerciais',
+                    'Manutenção Preventiva',
+                    'Instalação de Painéis Solares',
+                    'Projetos Elétricos'
+                ],
+                avaliacoes: [
+                    {
+                        rating: 5,
+                        texto: '"Excelente profissional, muito pontual e organizado. Resolveu o problema rapidamente."',
+                        autor: 'Maria Silva',
+                        tempo: 'há 2 dias'
+                    },
+                    {
+                        rating: 5,
+                        texto: '"Profissional muito competente e pontual. Recomendo!"',
+                        autor: 'João Silva',
+                        tempo: 'há 1 semana'
+                    },
+                    {
+                        rating: 4.5,
+                        texto: '"Ótimo trabalho, preço justo e acabamento perfeito."',
+                        autor: 'Ana Santos',
+                        tempo: 'há 2 semanas'
+                    }
+                ]
+            },
+            'eletricista1': {
+                nome: 'Pedro Souza',
+                profissao: 'Eletricista',
+                foto: 'image/eletricista1.jpg',
+                avaliacao: 4.7,
+                numAvaliacoes: 85,
+                servicos: [
+                    'Manutenção Elétrica',
+                    'Instalação de Tomadas',
+                    'Quadros de Distribuição',
+                    'Reparos Elétricos'
+                ],
+                avaliacoes: [
+                    {
+                        rating: 5,
+                        texto: '"Ótimo profissional, muito atencioso."',
+                        autor: 'Carlos Silva',
+                        tempo: 'há 3 dias'
+                    },
+                    {
+                        rating: 4,
+                        texto: '"Serviço bem feito e preço justo."',
+                        autor: 'Marina Santos',
+                        tempo: 'há 1 semana'
+                    }
+                ]
+            },
+
+            'eletricista2': {
+                nome: 'João Martins',
+                profissao: 'Eletricista',
+                foto: 'image/eletricista2.jpg',
+                avaliacao: 5.0,
+                numAvaliacoes: 150,
+                servicos: [
+                    'Instalação de Ar-condicionado',
+                    'Limpeza e higienização',
+                    'Manutenção',
+                    'Troca de gás'
+                ],
+                avaliacoes: [
+                    {
+                        rating: 5,
+                        texto: '"Instalou o Ar de forma rápida."',
+                        autor: 'Marcelo Silva',
+                        tempo: 'há 5 dias'
+                    },
+                    {
+                        rating: 4,
+                        texto: '"Serviço bem feito e preço justo."',
+                        autor: 'Marcia Santos',
+                        tempo: 'há 1 semana'
+                    }
+                ]
+            },
+
+            'eletricista3': {
+                nome: 'Marcos Paulo',
+                profissao: 'Instalador de Painéis Solares',
+                foto: 'image/eletricista3.jpg',
+                avaliacao: 4.9,
+                numAvaliacoes: 87,
+                servicos: [
+                    'Instalação de sistemas fotovoltaicos residenciais',
+                    'Manutenção e limpeza de painéis solares',
+                    'Projetos de energia solar personalizados',
+                    'Consultoria para economia de energia'
+                ],
+                avaliacoes: [
+                    {
+                        rating: 5,
+                        texto: '"Excelente trabalho! O sistema foi instalado em dois dias e já estou economizando."',
+                        autor: 'Fernanda Oliveira',
+                        tempo: 'há 1 semana'
+                    },
+                    {
+                        rating: 5,
+                        texto: '"Muito profissional e esclareceu todas as minhas dúvidas sobre energia solar."',
+                        autor: 'Lucas Almeida',
+                        tempo: 'há 3 dias'
+                    }
+                ]
+            },
+
+            'eletricista4': {
+                nome: 'Fernando Costa',
+                profissao: 'Instalador de Câmeras de Segurança',
+                foto: 'image/eletricista4.jpg',
+                avaliacao: 4.8,
+                numAvaliacoes: 104,
+                servicos: [
+                    'Instalação de câmeras de segurança residenciais e comerciais',
+                    'Configuração de sistemas de monitoramento remoto',
+                    'Manutenção e troca de equipamentos',
+                    'Integração com aplicativos de celular'
+                ],
+                avaliacoes: [
+                    {
+                        rating: 5,
+                        texto: '"Serviço excelente! Agora consigo monitorar minha casa pelo celular com tranquilidade."',
+                        autor: 'Patrícia Gomes',
+                        tempo: 'há 3 dias'
+                    },
+                    {
+                        rating: 4,
+                        texto: '"Instalação bem feita, mas poderia ter explicado melhor o funcionamento do app."',
+                        autor: 'Renato Farias',
+                        tempo: 'há 6 dias'
+                    }
+                ]
+            },
+            'pedreiro': {
+                nome: 'José Santos',
+                profissao: 'Pedreiro',
+                foto: 'image/pedreiro.jpg',
+                avaliacao: 4.8,
+                numAvaliacoes: 95,
+                servicos: [
+                    'Construção de casas e edifícios',
+                    'Reformas em geral',
+                    'Assentamento de pisos e revestimentos',
+                    'Levantamento de paredes'
+                ],
+                avaliacoes: [
+                    {
+                        rating: 5,
+                        texto: '"Excelente profissional, muito caprichoso no trabalho. Recomendo!"',
+                        autor: 'Roberto Silva',
+                        tempo: 'há 4 dias'
+                    },
+                    {
+                        rating: 4.5,
+                        texto: '"Trabalho de qualidade e entregue no prazo combinado."',
+                        autor: 'Paulo Oliveira',
+                        tempo: 'há 1 semana'
+                    }
+                ]
+            },
+            'pedreiro1': {
+                nome: 'Antonio Oliveira',
+                profissao: 'Pedreiro',
+                foto: 'image/pedreiro1.jpg',
+                avaliacao: 4.7,
+                numAvaliacoes: 78,
+                servicos: [
+                    'Reformas residenciais',
+                    'Acabamentos em geral',
+                    'Instalação de portas e janelas',
+                    'Manutenção predial'
+                ],
+                avaliacoes: [
+                    {
+                        rating: 5,
+                        texto: '"Ótimo serviço, muito profissional e organizado."',
+                        autor: 'Carla Mendes',
+                        tempo: 'há 3 dias'
+                    },
+                    {
+                        rating: 4,
+                        texto: '"Bom trabalho, cumpriu com todos os prazos estabelecidos."',
+                        autor: 'Fernando Santos',
+                        tempo: 'há 5 dias'
+                    }
+                ]
+            },
+        };
+
+        window.onload = function () {
+            const profId = getUrlParameter('prof');
+            const profData = profissionaisData[profId];
+
+            if (!profData) {
+                console.error('Profissional não encontrado');
+                return;
+            }
+
+            // Atualizar informações do perfil
+            document.querySelector('.profile-photo').src = profData.foto;
+            document.querySelector('.profile-info h1').textContent = profData.nome;
+            document.querySelector('.profile-info p').textContent = profData.profissao;
+
+            // Atualizar avaliação
+            const ratingLarge = document.querySelector('.rating-large');
+            const stars = Math.floor(profData.avaliacao);
+            const hasHalfStar = profData.avaliacao % 1 >= 0.5;
+
+            ratingLarge.innerHTML = '';
+            for (let i = 0; i < stars; i++) {
+                ratingLarge.innerHTML += '<i class="fas fa-star"></i>';
+            }
+            if (hasHalfStar) {
+                ratingLarge.innerHTML += '<i class="fas fa-star-half-alt"></i>';
+            }
+            ratingLarge.innerHTML += `<span style="color: #666">${profData.avaliacao} (${profData.numAvaliacoes} avaliações)</span>`;
+
+            // Atualizar lista de serviços
+            const servicesList = document.querySelector('.services-section ul');
+            servicesList.innerHTML = profData.servicos.map(service => `<li>${service}</li>`).join('');
+
+            // Mostrar portfólio para os eletricistas
+            const portfolioSection = document.getElementById('portfolio-section');
+            if (profId === 'eletricista2') {
+                portfolioSection.querySelector('.portfolio-grid').innerHTML = `
+                    <div class="portfolio-item">
+                        <img src="trabalhos/ar1.jpg" alt="Instalação de Ar Condicionado 1">
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="trabalhos/ar2.jpg" alt="Instalação de Ar Condicionado 2">
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="trabalhos/ar3.png" alt="Instalação de Ar Condicionado 3">
+                    </div>
+                `;
+                portfolioSection.style.display = 'block';
+            } else if (['eletricista', 'eletricista1', 'eletricista3', 'eletricista4'].includes(profId)) {
+                portfolioSection.querySelector('.portfolio-grid').innerHTML = `
+                    <div class="portfolio-item">
+                        <img src="trabalhos/painel1.jpg" alt="Instalação de Painel Solar 1">
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="trabalhos/painel2.jpg" alt="Instalação de Painel Solar 2">
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="trabalhos/painel3.jpg" alt="Instalação de Painel Solar 3">
+                    </div>
+                `;
+                portfolioSection.style.display = 'block';
+            } else {
+                portfolioSection.style.display = 'none';
+            }
+
+            // Atualizar avaliações
+            const reviewsSection = document.querySelector('.reviews-section');
+            reviewsSection.innerHTML = '<h2>Avaliações Recentes</h2>' +
+                profData.avaliacoes.map(review => `
+                    <div class="review-card">
+                        <div class="rating">
+                            ${Array(Math.floor(review.rating)).fill('<i class="fas fa-star"></i>').join('')}
+                            ${review.rating % 1 >= 0.5 ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                        </div>
+                        <p>${review.texto}</p>
+                        <small>- ${review.autor}, ${review.tempo}</small>
+                    </div>
+                `).join('');
+        };
+    </script>
+</body>
+
+</html>

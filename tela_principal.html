@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conecta Serviços - Principal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-small">
+                <img src="image/Logo.png" alt="Conecta Serviços">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar serviços próximos...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="user-menu">
+                <button onclick="window.location.href='cadastro_profissional.html'" style="background: var(--primary-color); color: white; padding: 8px 15px; border: none; border-radius: 20px; cursor: pointer; margin-right: 15px;">Cadastre-se como Profissional</button>
+                <button onclick="window.location.href='parcerias.html'" style="background: #28a745; color: white; padding: 8px 15px; border: none; border-radius: 20px; cursor: pointer; margin-right: 15px;"><i class="fas fa-handshake"></i> Parcerias</button>
+                <i class="fas fa-bell" style="color: var(--primary-color);"></i>
+                <i class="fas fa-user-circle" style="color: var(--primary-color); font-size: 24px;"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="categories-scroll">
+            <div class="category-card" data-category="todos" onclick="filterServices('todos')">
+                <div class="category-icon">
+                    <i class="fas fa-th" style="font-size: 32px; color: var(--primary-color);"></i>
+                </div>
+                <span class="category-name">Todos</span>
+            </div>
+            <div class="category-card" data-category="eletricista" onclick="filterServices('eletricista')">
+                <div class="category-icon">
+                    <img src="image/eletricista.jpg" alt="Eletricista" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <span class="category-name">Eletricista</span>
+            </div>
+            <div class="category-card" data-category="pedreiro" onclick="filterServices('pedreiro')">
+                <div class="category-icon">
+                    <img src="image/pedreiro.jpg" alt="Pedreiro" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <span class="category-name">Pedreiro</span>
+            </div>
+            <div class="category-card" data-category="pintor" onclick="filterServices('pintor')">
+                <div class="category-icon">
+                    <img src="image/pintor.jpg" alt="Pintor" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <span class="category-name">Pintor</span>
+            </div>
+            <div class="category-card" data-category="encanador" onclick="filterServices('encanador')">
+                <div class="category-icon">
+                    <img src="image/encanador.jpg" alt="Encanador" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <span class="category-name">Encanador</span>
+            </div>
+            <div class="category-card" data-category="limpeza" onclick="filterServices('limpeza')">
+                <div class="category-icon">
+                    <img src="image/limpeza.png" alt="Limpeza" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <span class="category-name">Limpeza</span>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <!-- Eletricistas -->
+            <div class="service-card" data-category="eletricista" onclick="window.location.href='perfil_profissional.html?prof=eletricista'" style="cursor: pointer;">
+                <img src="image/eletricista.jpg" alt="Serviço de Eletricista" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/eletricista.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Ricardo Oliveira</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.9</div>
+                    </div>
+                    <h3 class="service-title">Instalações Elétricas</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 2km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="eletricista" onclick="window.location.href='perfil_profissional.html?prof=eletricista1'" style="cursor: pointer;">
+                <img src="image/eletricista1.jpg" alt="Serviço de Eletricista" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/eletricista1.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Pedro Souza</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.7</div>
+                    </div>
+                    <h3 class="service-title">Manutenção Elétrica</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 3.5km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="eletricista" onclick="window.location.href='perfil_profissional.html?prof=eletricista2'" style="cursor: pointer;">
+                <img src="image/eletricista2.jpg" alt="Serviço de Eletricista" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/eletricista2.jpg" alt="Prestador" class="provider-avatar">
+                        <span>João Martins</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.8</div>
+                    </div>
+                    <h3 class="service-title">Instalação de Ar Condicionado</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 1.8km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="eletricista" onclick="window.location.href='perfil_profissional.html?prof=eletricista3'" style="cursor: pointer;">
+                <img src="image/eletricista3.jpg" alt="Serviço de Eletricista" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/eletricista3.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Marcos Paulo</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.6</div>
+                    </div>
+                    <h3 class="service-title">Instalação de Painéis Solares</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 4.5km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="eletricista" onclick="window.location.href='perfil_profissional.html?prof=eletricista4'" style="cursor: pointer;">
+                <img src="image/eletricista4.jpg" alt="Serviço de Eletricista" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/eletricista4.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Fernando Costa</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.8</div>
+                    </div>
+                    <h3 class="service-title">Instalação de Câmeras</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 2.7km</div>
+                </div>
+            </div>
+
+            <!-- Pedreiros -->
+            <div class="service-card" data-category="pedreiro" onclick="window.location.href='perfil_profissional.html?prof=pedreiro1'" style="cursor: pointer;">
+                <img src="image/pedreiro.jpg" alt="Serviço de Pedreiro" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/pedreiro.jpg" alt="Prestador" class="provider-avatar">
+                        <span>José Santos</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.8</div>
+                    </div>
+                    <h3 class="service-title">Construção e Reformas</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 3km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="pedreiro" onclick="window.location.href='perfil_profissional.html?prof=pedreiro2'" style="cursor: pointer;">
+                <img src="image/pedreiro1.jpg" alt="Serviço de Pedreiro" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/pedreiro1.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Carlos Adriano</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.6</div>
+                    </div>
+                    <h3 class="service-title">Reformas em Geral</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 3km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="pedreiro2" onclick="window.location.href='perfil_profissional.html?prof=pedreiro'" style="cursor: pointer;">
+                <img src="image/pedreiro2.jpg" alt="Serviço de Pedreiro" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/pedreiro2.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Pedro Martins</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.9</div>
+                    </div>
+                    <h3 class="service-title">Construção de alvenaria</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 3km</div>
+                </div>
+            </div>
+            <div class="service-card" data-category="pedreiro3" onclick="window.location.href='perfil_profissional.html?prof=pedreiro'" style="cursor: pointer;">
+                <img src="image/pedreiro3.jpg" alt="Serviço de Pedreiro" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/pedreiro3.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Eliel Santos</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.0</div>
+                    </div>
+                    <h3 class="service-title">Assentamento de pisos e revestimentos</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 3km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="pedreiro4" onclick="window.location.href='perfil_profissional.html?prof=pedreiro'" style="cursor: pointer;">
+                <img src="image/pedreiro4.jpg" alt="Serviço de Pedreiro" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/pedreiro4.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Josemar Oliveira</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.2</div>
+                    </div>
+                    <h3 class="service-title">Instalação de estruturas de concreto</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 3km</div>
+                </div>
+            </div>
+
+            <!----------------------------- Pintores -------------------------------------------------------------->
+            <div class="service-card" data-category="pintor">
+                <img src="image/pintor.jpg" alt="Serviço de Pintura" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/pintor.jpg" alt="Prestador" class="provider-avatar">
+                        <span>André Silva</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.3</div>
+                    </div>
+                    <h3 class="service-title">Pintura Decorativa</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 1.5km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="pintor">
+                <img src="image/pintor1.jpg" alt="Serviço de Pintura" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/pintor1.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Savio Oliveira</span>
+                        <div class="rating"><i class="fas fa-star"></i> 3.8</div>
+                    </div>
+                    <h3 class="service-title">Pintura Residencial e Comercial</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 1.5km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="pintor">
+                <img src="image/pintor2.jpg" alt="Serviço de Pintura" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/pintor2.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Marcos Roberto</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.0</div>
+                    </div>
+                    <h3 class="service-title">Restauração de pintura</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 1.5km</div>
+                </div>
+            </div>
+            <div class="service-card" data-category="pintor">
+                <img src="image/pintor3.jpg" alt="Serviço de Pintura" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/pintor3.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Pedro Andrade</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.1</div>
+                    </div>
+                    <h3 class="service-title">Pintura industrial</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 1.5km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="pintor">
+                <img src="image/pintor4.jpg" alt="Serviço de Pintura" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/pintor4.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Marcio Muniz</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.3</div>
+                    </div>
+                    <h3 class="service-title">Impermeabilização e Selagem</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 1.5km</div>
+                </div>
+            </div>
+            <!------------------------------------------- Encanadores ------------------------------------------------->
+            <div class="service-card" data-category="encanador">
+                <img src="image/encanador1.jpg" alt="Serviço de Encanador" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/encanador1.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Roberto Alves</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.7</div>
+                    </div>
+                    <h3 class="service-title">Desentupimento</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 3.1km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="encanador">
+                <img src="image/encanador2.jpg" alt="Serviço de Encanador" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/encanador2.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Paulo Santos</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.8</div>
+                    </div>
+                    <h3 class="service-title">Instalação de Aquecedor</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 5km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="encanador">
+                <img src="image/encanador3.jpg" alt="Serviço de Encanador" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/encanador3.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Marcelo Lima</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.6</div>
+                    </div>
+                    <h3 class="service-title">Manutenção de Piscinas</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 2.9km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="encanador">
+                <img src="image/encanador4.jpg" alt="Serviço de Encanador" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/encanador4.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Ricardo Santos</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.7</div>
+                    </div>
+                    <h3 class="service-title">Instalação de Torneiras</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 1.5km</div>
+                </div>
+            </div>
+
+            <!---------------------------------------- Limpeza ------------------------------------------------------->
+            <div class="service-card" data-category="limpeza">
+                <img src="image/limpeza1.jpg" alt="Serviço de Limpeza" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/limpeza1.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Ana Paula</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.9</div>
+                    </div>
+                    <h3 class="service-title">Limpeza Pós Obra</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 1.7km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="limpeza">
+                <img src="image/limpeza2.jpg" alt="Serviço de Limpeza" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/limpeza2.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Carla Rodrigues</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.7</div>
+                    </div>
+                    <h3 class="service-title">Limpeza Comercial</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 3.3km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="limpeza">
+                <img src="image/limpeza3.jpg" alt="Serviço de Limpeza" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/limpeza3.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Patricia Silva</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.8</div>
+                    </div>
+                    <h3 class="service-title">Limpeza de Vidros</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 2.2km</div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="limpeza">
+                <img src="image/limpeza4.jpg" alt="Serviço de Limpeza" class="service-image">
+                <div class="service-info">
+                    <div class="service-provider">
+                        <img src="image/limpeza4.jpg" alt="Prestador" class="provider-avatar">
+                        <span>Sandra Oliveira</span>
+                        <div class="rating"><i class="fas fa-star"></i> 4.9</div>
+                    </div>
+                    <h3 class="service-title">Limpeza de Carpetes</h3>
+                    <div class="service-location"><i class="fas fa-map-marker-alt"></i> 3.7km</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function filterServices(category) {
+            // Remove active class from all category cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.classList.remove('active');
+            });
+
+            // Add active class to selected category
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+
+            // Show/hide service cards based on category
+            document.querySelectorAll('.service-card').forEach(card => {
+                if (category === 'todos' || card.dataset.category === category) {
+                    card.classList.add('visible');
+                } else {
+                    card.classList.remove('visible');
+                }
+            });
+        }
+
+        // Show all services by default
+        filterServices('todos');
+    </script>
+</body>
+</html>

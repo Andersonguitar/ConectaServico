@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário de Agendamento - Conecta Serviços</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .calendar-container {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .month-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .month-nav button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar th {
+            padding: 10px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .calendar td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .calendar td:hover:not(.disabled) {
+            background-color: #f0f0f0;
+        }
+
+        .calendar td.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .calendar td.available {
+            background-color: #e8f5e9;
+        }
+
+        .calendar td.selected {
+            /*background-color: var(--primary-color);*/
+            background-color: red;
+            color: white;
+        }
+
+        .prof-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .prof-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-small">
+                <img src="image/Logo.png" alt="Conecta Serviços">
+            </div>
+        </div>
+    </header>
+
+    <div class="calendar-container">
+        <div class="prof-info">
+            <img src="" alt="Foto do Profissional" id="prof-photo">
+            <h2 id="prof-name"></h2>
+        </div>
+
+        <div class="calendar-header">
+            <div class="month-nav">
+                <button onclick="previousMonth()"><i class="fas fa-chevron-left"></i></button>
+                <h2 id="month-display"></h2>
+                <button onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <table class="calendar" id="calendar-table">
+            <thead>
+                <tr>
+                    <th>Dom</th>
+                    <th>Seg</th>
+                    <th>Ter</th>
+                    <th>Qua</th>
+                    <th>Qui</th>
+                    <th>Sex</th>
+                    <th>Sáb</th>
+                </tr>
+            </thead>
+            <tbody id="calendar-body"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let currentDate = new Date();
+        let selectedDate = null;
+
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        function generateCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            
+            document.getElementById('month-display').textContent = 
+                firstDay.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+
+            const calendarBody = document.getElementById('calendar-body');
+            calendarBody.innerHTML = '';
+
+            let date = new Date(firstDay);
+            date.setDate(1 - firstDay.getDay());
+
+            while (date <= lastDay || date.getDay() !== 0) {
+                const week = document.createElement('tr');
+                
+                for (let i = 0; i < 7; i++) {
+                    const day = document.createElement('td');
+                    day.textContent = date.getDate();
+
+                    if (date.getMonth() !== month || date < new Date()) {
+                        day.classList.add('disabled');
+                    } else {
+                        const clickDate = new Date(date);
+                        // Simular dias disponíveis aleatoriamente
+                        if (date >= new Date() && Math.random() > 0.3) {
+                            day.classList.add('available');
+                        }
+                        day.addEventListener('click', () => selectDate(clickDate, day.classList.contains('available')));
+                    }
+
+                    if (selectedDate && date.toDateString() === selectedDate.toDateString()) {
+                        day.classList.add('selected');
+                    }
+
+                    week.appendChild(day);
+                    date.setDate(date.getDate() + 1);
+                }
+
+                calendarBody.appendChild(week);
+            }
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar();
+        }
+
+        function selectDate(date, isAvailable) {
+            selectedDate = date;
+            generateCalendar();
+            
+            const formattedDate = date.toLocaleDateString('pt-BR');
+            const profId = getUrlParameter('prof');
+            const profName = getUrlParameter('name');
+            const profPhoto = getUrlParameter('photo');
+
+            // Salvar a data do serviço no localStorage apenas se estiver disponível
+            if (isAvailable) {
+                localStorage.setItem('serviceDate', date.toISOString().split('T')[0]);
+            }
+
+            // Redirecionar para o chat com a data selecionada e status de disponibilidade
+            window.location.href = `chat.html?prof=${profId}&name=${encodeURIComponent(profName)}&photo=${encodeURIComponent(profPhoto)}&selectedDate=${formattedDate}&isAvailable=${isAvailable}`;
+        }
+        
+
+        window.onload = function() {
+            const profName = getUrlParameter('name');
+            const profPhoto = getUrlParameter('photo');
+
+            document.getElementById('prof-name').textContent = decodeURIComponent(profName);
+            document.getElementById('prof-photo').src = decodeURIComponent(profPhoto);
+
+            generateCalendar();
+        };
+    </script>
+</body>
+</html>
