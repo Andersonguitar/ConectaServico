@@ -205,49 +205,20 @@
             window.location.href = `avaliacao_servico.html?prof=${profId}&name=${profName}&photo=${profPhoto}`;
         }
 
-        // Inicialização da página
+        // Modificar a função existente de window.onload
         window.onload = function() {
             const profId = getUrlParameter('prof');
             const profName = getUrlParameter('name');
             const profPhoto = getUrlParameter('photo');
-            const selectedDate = getUrlParameter('selectedDate');
-            const isAvailable = getUrlParameter('isAvailable') === 'true';
+            const preMessage = getUrlParameter('message');
 
-            // Atualizar informações do profissional no cabeçalho
             document.getElementById('prof-name').textContent = decodeURIComponent(profName);
             document.getElementById('prof-photo').src = decodeURIComponent(profPhoto);
 
-            // Se houver uma data selecionada, mostrar as mensagens de agendamento
-            if (selectedDate) {
-                const messagesContainer = document.getElementById('chat-messages');
-                const messageElement = document.createElement('div');
-                messageElement.className = 'message sent';
-                messageElement.innerHTML = `
-                    Gostaria de agendar um serviço para o dia ${selectedDate}.
-                    <div class="timestamp">${new Date().toLocaleTimeString()}</div>
-                `;
-                messagesContainer.appendChild(messageElement);
-
-                // Simular resposta do profissional
-                setTimeout(() => {
-                    const responseElement = document.createElement('div');
-                    responseElement.className = 'message received';
-                    
-                    if (isAvailable) {
-                        responseElement.innerHTML = `
-                            Sim, tenho disponibilidade para o dia ${selectedDate}! Podemos confirmar seu agendamento.
-                            <div class="timestamp">${new Date().toLocaleTimeString()}</div>
-                        `;
-                    } else {
-                        responseElement.innerHTML = `
-                            Desculpe, mas não tenho disponibilidade para o dia ${selectedDate}. Poderia escolher outra data?
-                            <div class="timestamp">${new Date().toLocaleTimeString()}</div>
-                        `;
-                    }
-                    
-                    messagesContainer.appendChild(responseElement);
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                }, 1000);
+            // Se houver uma mensagem pré-definida, enviar automaticamente
+            if (preMessage) {
+                document.getElementById('message-input').value = decodeURIComponent(preMessage);
+                sendMessage();
             }
 
             // Verificar se é o dia do serviço

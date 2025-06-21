@@ -129,21 +129,6 @@
             </ul>
         </div>
 
-        <div class="portfolio-section" id="portfolio-section" style="display: none;">
-            <h2>Portfólio de Trabalhos</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <img src="trabalhos/ar1.jpg" alt="Instalação de Ar Condicionado 1">
-                </div>
-                <div class="portfolio-item">
-                    <img src="trabalhos/ar2.jpg" alt="Instalação de Ar Condicionado 2">
-                </div>
-                <div class="portfolio-item">
-                    <img src="trabalhos/ar3.png" alt="Instalação de Ar Condicionado 3">
-                </div>
-            </div>
-        </div>
-
         <div class="reviews-section">
             <h2>Avaliações Recentes</h2>
             <div class="review-card">
@@ -411,38 +396,6 @@
             // Atualizar lista de serviços
             const servicesList = document.querySelector('.services-section ul');
             servicesList.innerHTML = profData.servicos.map(service => `<li>${service}</li>`).join('');
-
-            // Mostrar portfólio para os eletricistas
-            const portfolioSection = document.getElementById('portfolio-section');
-            if (profId === 'eletricista2') {
-                portfolioSection.querySelector('.portfolio-grid').innerHTML = `
-                    <div class="portfolio-item">
-                        <img src="trabalhos/ar1.jpg" alt="Instalação de Ar Condicionado 1">
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="trabalhos/ar2.jpg" alt="Instalação de Ar Condicionado 2">
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="trabalhos/ar3.png" alt="Instalação de Ar Condicionado 3">
-                    </div>
-                `;
-                portfolioSection.style.display = 'block';
-            } else if (['eletricista', 'eletricista1', 'eletricista3', 'eletricista4'].includes(profId)) {
-                portfolioSection.querySelector('.portfolio-grid').innerHTML = `
-                    <div class="portfolio-item">
-                        <img src="trabalhos/painel1.jpg" alt="Instalação de Painel Solar 1">
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="trabalhos/painel2.jpg" alt="Instalação de Painel Solar 2">
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="trabalhos/painel3.jpg" alt="Instalação de Painel Solar 3">
-                    </div>
-                `;
-                portfolioSection.style.display = 'block';
-            } else {
-                portfolioSection.style.display = 'none';
-            }
 
             // Atualizar avaliações
             const reviewsSection = document.querySelector('.reviews-section');

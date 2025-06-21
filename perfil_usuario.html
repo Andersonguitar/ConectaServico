@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Usuário - Conecta Serviços</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/pt-br.js"></script>
+    <style>
+        :root {
+            --primary-color: rgb(1,33,46);
+            --secondary-color: #f5f6fa;
+            --text-color: #2d3436;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: var(--secondary-color);
+        }
+
+        .header {
+            background: white;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 20px;
+        }
+
+        .left-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-info {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .chat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .chat-item:hover {
+            background: #f5f5f5;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .chat-info {
+            flex: 1;
+        }
+
+        .chat-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .chat-preview {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .calendar-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Ajustes do calendário */
+        .fc .fc-button {
+            padding: 0.3em 0.6em;
+            font-size: 0.9em;
+        }
+
+        .fc .fc-toolbar-title {
+            font-size: 1.2em;
+        }
+
+        .fc .fc-event {
+            background-color: #ff4444;
+            border-color: #ff4444;
+        }
+
+        .fc .fc-day-today {
+            background-color: rgba(255, 220, 220, 0.1) !important;
+        }
+
+        .fc .fc-highlight {
+            background-color: rgba(255, 68, 68, 0.1) !important;
+        }
+
+        .fc .fc-toolbar-title {
+            font-size: 1em;
+            margin: 0;
+        }
+
+        .fc .fc-toolbar.fc-header-toolbar {
+            margin-bottom: 0.5em;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3em;
+            justify-content: center;
+        }
+
+        .fc .fc-toolbar-chunk {
+            display: flex;
+            gap: 0.2em;
+            align-items: center;
+        }
+
+        .fc .fc-view-harness {
+            font-size: 0.9em;
+        }
+
+        .fc .fc-daygrid-day-number {
+            font-size: 0.9em;
+            padding: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chat-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .profile-modal, .event-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .chat-window {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .chat-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message.sent {
+            align-items: flex-end;
+        }
+
+        .message.received {
+            align-items: flex-start;
+        }
+
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 70%;
+        }
+
+        .sent .message-content {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .received .message-content {
+            background: #f0f0f0;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .event-details {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="image/Logo.png" alt="Logo" style="height: 40px;">
+        <a href="tela_principal.html" style="color: var(--primary-color); text-decoration: none;">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </div>
+
+    <div class="profile-container">
+        <div class="left-section">
+            <div class="profile-info">
+                <img src="image/eletricista1.jpg" alt="Foto do Perfil" class="profile-photo">
+                <h2 style="margin-bottom: 10px;">João da Silva</h2>
+                <p style="color: #666;">Eletricista Profissional</p>
+            </div>
+            
+            <div class="chat-list">
+                <div class="chat-item">
+                    <img src="image/cliente2.jpg" alt="Maria" class="chat-avatar">
+                    <div class="chat-info">
+                        <div class="chat-name">Maria Silva</div>
+                        <div class="chat-preview">Preciso de um orçamento...</div>
+                    </div>
+                </div>
+                <div class="chat-item">
+                    <img src="image/cliente1.jpg" alt="João" class="chat-avatar">
+                    <div class="chat-info">
+                        <div class="chat-name">João Santos</div>
+                        <div class="chat-preview">Qual sua disponibilidade...</div>
+                    </div>
+                </div>
+                <div class="chat-item">
+                    <img src="image/cliente3.jpg" alt="Ana" class="chat-avatar">
+                    <div class="chat-info">
+                        <div class="chat-name">Ana Oliveira</div>
+                        <div class="chat-preview">Obrigada pelo serviço!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calendar-section">
+            <h2 style="margin-bottom: 20px;">Agenda de Serviços</h2>
+            <div id="calendar"></div>
+        </div>
+    </div>
+
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-window">
+            <div class="chat-header">
+                <img src="" alt="Cliente" class="chat-avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 15px;">
+                <h3 class="chat-title">Nome do Cliente</h3>
+                <button onclick="closeChat()" style="margin-left: auto; background: none; border: none; cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input" style="padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px;">
+                <input type="text" id="messageInput" placeholder="Digite sua mensagem..." style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 20px; outline: none;">
+                <button onclick="sendMessage()" style="background: var(--primary-color); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="event-modal" id="newEventModal">
+        <div class="event-details">
+            <h3 style="margin-bottom: 15px;">Novo Agendamento</h3>
+            <div class="event-form" style="display: flex; flex-direction: column; gap: 10px;">
+                <input type="text" id="eventTitle" placeholder="Nome do Cliente" style="padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                <input type="text" id="eventService" placeholder="Serviço" style="padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                <input type="text" id="eventAddress" placeholder="Endereço" style="padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                <input type="text" id="eventPhone" placeholder="Telefone" style="padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                <div style="display: flex; gap: 10px;">
+                    <input type="time" id="eventStartTime" style="padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="time" id="eventEndTime" style="padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button onclick="saveNewEvent()" style="flex: 1; background: var(--primary-color); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Salvar</button>
+                    <button onclick="closeNewEventModal()" style="flex: 1; background: #666; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="event-modal" id="eventModal">
+        <div class="event-details">
+            <h3 style="margin-bottom: 15px;">Detalhes do Agendamento</h3>
+            <div id="eventInfo"></div>
+            <button onclick="closeEventModal()" style="margin-top: 15px; background: var(--primary-color); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
+                Fechar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Dados simulados de conversas com imagens
+        const chatHistory = {
+            'Maria Silva': {
+                avatar: 'image/cliente2.jpg',
+                messages: [
+                    { type: 'received', content: 'Boa tarde! Preciso de um orçamento para instalação elétrica.', time: '14:30' },
+                    { type: 'sent', content: 'Olá Maria! Claro, pode me dar mais detalhes sobre o serviço?', time: '14:35' },
+                    { type: 'received', content: 'É para uma casa nova, preciso de instalação completa.', time: '14:40' },
+                    { type: 'sent', content: 'Entendi. Qual o tamanho aproximado da casa?', time: '14:42' }
+                ]
+            },
+            'João Santos': {
+                avatar: 'image/cliente1.jpg',
+                messages: [
+                    { type: 'received', content: 'Qual sua disponibilidade para semana que vem?', time: '10:15' },
+                    { type: 'sent', content: 'Tenho horários disponíveis na terça e quinta.', time: '10:20' },
+                    { type: 'received', content: 'Ótimo, pode ser terça pela manhã?', time: '10:25' }
+                ]
+            },
+            'Ana Oliveira': {
+                avatar: 'image/cliente3.jpg',
+                messages: [
+                    { type: 'received', content: 'Obrigada pelo serviço!', time: '16:00' },
+                    { type: 'sent', content: 'Por nada! Qualquer necessidade é só chamar.', time: '16:05' },
+                    { type: 'received', content: 'Com certeza! Vou recomendar seu trabalho.', time: '16:10' }
+                ]
+            }
+        };
+
+        // Função para abrir o chat
+        function openChat(name) {
+            const modal = document.getElementById('chatModal');
+            const messages = document.getElementById('chatMessages');
+            const chatTitle = document.querySelector('.chat-title');
+            const chatAvatar = document.querySelector('.chat-header .chat-avatar');
+            
+            chatTitle.textContent = name;
+            chatAvatar.src = chatHistory[name].avatar;
+            messages.innerHTML = '';
+            
+            chatHistory[name].messages.forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${msg.type}`;
+                messageDiv.innerHTML = `
+                    <div class="message-content">${msg.content}</div>
+                    <div class="message-time">${msg.time}</div>
+                `;
+                messages.appendChild(messageDiv);
+            });
+            
+            modal.style.display = 'block';
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function saveNewEvent() {
+            const title = document.getElementById('eventTitle').value;
+            const service = document.getElementById('eventService').value;
+            const address = document.getElementById('eventAddress').value;
+            const phone = document.getElementById('eventPhone').value;
+            const startTime = document.getElementById('eventStartTime').value;
+            const endTime = document.getElementById('eventEndTime').value;
+
+            if (!title || !service || !address || !phone || !startTime || !endTime) {
+                alert('Por favor, preencha todos os campos');
+                return;
+            }
+
+            const startDateTime = new Date(selectedDate);
+            const [startHours, startMinutes] = startTime.split(':');
+            startDateTime.setHours(parseInt(startHours), parseInt(startMinutes));
+
+            const endDateTime = new Date(selectedDate);
+            const [endHours, endMinutes] = endTime.split(':');
+            endDateTime.setHours(parseInt(endHours), parseInt(endMinutes));
+
+            calendar.addEvent({
+                title: `${service} - ${title}`,
+                start: startDateTime,
+                end: endDateTime,
+                color: '#ff4444',
+                extendedProps: {
+                    cliente: title,
+                    servico: service,
+                    endereco: address,
+                    telefone: phone
+                }
+            });
+
+            closeNewEventModal();
+        }
+
+        function closeNewEventModal() {
+            document.getElementById('newEventModal').style.display = 'none';
+            document.getElementById('eventTitle').value = '';
+            document.getElementById('eventService').value = '';
+            document.getElementById('eventAddress').value = '';
+            document.getElementById('eventPhone').value = '';
+            document.getElementById('eventStartTime').value = '';
+            document.getElementById('eventEndTime').value = '';
+        }
+
+        function closeChat() {
+            document.getElementById('chatModal').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                locale: 'pt-br',
+                buttonText: {
+                    today: 'Hoje',
+                    month: 'Mês',
+                    week: 'Semana',
+                    day: 'Dia'
+                },
+                dayCellDidMount: function(info) {
+                    // Verifica se há eventos neste dia
+                    const events = calendar.getEvents().filter(event => {
+                        const eventDate = event.start.toDateString();
+                        const cellDate = info.date.toDateString();
+                        return eventDate === cellDate;
+                    });
+                    
+                    if (events.length > 0) {
+                        info.el.style.backgroundColor = 'rgba(255, 68, 68, 0.1)';
+                    }
+                },
+                dateClick: function(info) {
+                    const events = calendar.getEvents().filter(event => {
+                        const eventDate = event.start.toDateString();
+                        const clickedDate = info.date.toDateString();
+                        return eventDate === clickedDate;
+                    });
+
+                    if (events.length > 0) {
+                        showDayEvents(events, info.date);
+                    } else {
+                        selectedDate = info.date;
+                        document.getElementById('newEventModal').style.display = 'block';
+                    }
+                },
+                eventClick: function(info) {
+                    showEventDetails(info.event);
+                },
+                events: [
+                    {
+                        title: 'Instalação Elétrica - Maria Silva',
+                        start: '2024-01-15T10:00:00',
+                        end: '2024-01-15T12:00:00',
+                        color: '#ff4444',
+                        extendedProps: {
+                            cliente: 'Maria Silva',
+                            servico: 'Instalação Elétrica Completa',
+                            endereco: 'Rua das Flores, 123',
+                            telefone: '(11) 98765-4321'
+                        }
+                    },
+                    {
+                        title: 'Manutenção - João Santos',
+                        start: '2024-01-17T14:00:00',
+                        end: '2024-01-17T16:00:00',
+                        color: '#ff4444',
+                        extendedProps: {
+                            cliente: 'João Santos',
+                            servico: 'Manutenção Preventiva',
+                            endereco: 'Av. Principal, 456',
+                            telefone: '(11) 91234-5678'
+                        }
+                    },
+                    {
+                        title: 'Reparo - Ana Oliveira',
+                        start: '2024-01-20T09:00:00',
+                        end: '2024-01-20T11:00:00',
+                        color: '#ff4444',
+                        extendedProps: {
+                            cliente: 'Ana Oliveira',
+                            servico: 'Reparo de Tomadas',
+                            endereco: 'Rua do Parque, 789',
+                            telefone: '(11) 94567-8901'
+                        }
+                    }
+                ]
+            });
+            calendar.render();
+
+            // Adicionar eventos de clique aos itens do chat com as imagens corretas
+            const chatImages = {
+                'Maria Silva': 'image/cliente2.jpg',
+                'João Santos': 'image/cliente1.jpg',
+                'Ana Oliveira': 'image/cliente3.jpg'
+            };
+
+            document.querySelectorAll('.chat-item').forEach(item => {
+                const name = item.querySelector('.chat-name').textContent;
+                item.onclick = () => openChat(name);
+            });
+        });
+
+        function showEventDetails(event) {
+            const modal = document.getElementById('eventModal');
+            const info = document.getElementById('eventInfo');
+            const props = event.extendedProps;
+            
+            info.innerHTML = `
+                <p><strong>Cliente:</strong> ${props.cliente}</p>
+                <p><strong>Serviço:</strong> ${props.servico}</p>
+                <p><strong>Endereço:</strong> ${props.endereco}</p>
+                <p><strong>Telefone:</strong> ${props.telefone}</p>
+                <p><strong>Horário:</strong> ${event.start.toLocaleTimeString()} - ${event.end.toLocaleTimeString()}</p>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModal').style.display = 'none';
+        }
+
+        function showDayEvents(events, date) {
+            const modal = document.getElementById('eventModal');
+            const info = document.getElementById('eventInfo');
+            
+            let content = `<h4 style="margin-bottom: 10px;">${date.toLocaleDateString()}</h4>`;
+            
+            events.forEach(event => {
+                const props = event.extendedProps;
+                content += `
+                    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+                        <p><strong>Horário:</strong> ${event.start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - ${event.end.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+                        <p><strong>Cliente:</strong> ${props.cliente}</p>
+                        <p><strong>Serviço:</strong> ${props.servico}</p>
+                        <p><strong>Endereço:</strong> ${props.endereco}</p>
+                        <p><strong>Telefone:</strong> ${props.telefone}</p>
+                    </div>
+                `;
+            });
+            
+            info.innerHTML = content;
+            modal.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

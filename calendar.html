@@ -166,15 +166,17 @@
                     const day = document.createElement('td');
                     day.textContent = date.getDate();
 
-                    if (date.getMonth() !== month || date < new Date()) {
+                    if (date.getMonth() !== month) {
                         day.classList.add('disabled');
                     } else {
-                        const clickDate = new Date(date);
                         // Simular dias disponíveis aleatoriamente
                         if (date >= new Date() && Math.random() > 0.3) {
                             day.classList.add('available');
+                            const clickDate = new Date(date);
+                            day.addEventListener('click', () => selectDate(clickDate));
+                        } else if (date < new Date()) {
+                            day.classList.add('disabled');
                         }
-                        day.addEventListener('click', () => selectDate(clickDate, day.classList.contains('available')));
                     }
 
                     if (selectedDate && date.toDateString() === selectedDate.toDateString()) {
@@ -199,24 +201,22 @@
             generateCalendar();
         }
 
-        function selectDate(date, isAvailable) {
+        function selectDate(date) {
             selectedDate = date;
-            generateCalendar();
-            
+            generateCalendar(); // Atualiza o calendário para mostrar a data selecionada
+
             const formattedDate = date.toLocaleDateString('pt-BR');
             const profId = getUrlParameter('prof');
             const profName = getUrlParameter('name');
             const profPhoto = getUrlParameter('photo');
+            const message = `Olá! Gostaria de agendar um serviço para o dia ${formattedDate}.`;
 
-            // Salvar a data do serviço no localStorage apenas se estiver disponível
-            if (isAvailable) {
-                localStorage.setItem('serviceDate', date.toISOString().split('T')[0]);
-            }
+            // Salvar a data do serviço no localStorage
+            localStorage.setItem('serviceDate', date.toISOString().split('T')[0]);
 
-            // Redirecionar para o chat com a data selecionada e status de disponibilidade
-            window.location.href = `chat.html?prof=${profId}&name=${encodeURIComponent(profName)}&photo=${encodeURIComponent(profPhoto)}&selectedDate=${formattedDate}&isAvailable=${isAvailable}`;
+            // Redirecionar para o chat com a mensagem de agendamento
+            window.location.href = `chat.html?prof=${profId}&name=${encodeURIComponent(profName)}&photo=${encodeURIComponent(profPhoto)}&message=${encodeURIComponent(message)}`;
         }
-        
 
         window.onload = function() {
             const profName = getUrlParameter('name');
