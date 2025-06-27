@@ -129,6 +129,8 @@
             </ul>
         </div>
 
+
+
         <div class="reviews-section">
             <h2>Avaliações Recentes</h2>
             <div class="review-card">
@@ -171,6 +173,7 @@
                 foto: 'image/eletricista.jpg',
                 avaliacao: 4.9,
                 numAvaliacoes: 120,
+                portfolio: ['manu1.jpg', 'manu2.jpg', 'manu3.jpg'],
                 servicos: [
                     'Instalações Elétricas Residenciais e Comerciais',
                     'Manutenção Preventiva',
@@ -204,6 +207,7 @@
                 foto: 'image/eletricista1.jpg',
                 avaliacao: 4.7,
                 numAvaliacoes: 85,
+                portfolio: ['manu1.jpg', 'manu2.jpg', 'manu3.jpg'],
                 servicos: [
                     'Manutenção Elétrica',
                     'Instalação de Tomadas',
@@ -228,10 +232,11 @@
 
             'eletricista2': {
                 nome: 'João Martins',
-                profissao: 'Eletricista',
+                profissao: 'Instalador de Ar Condicionado',
                 foto: 'image/eletricista2.jpg',
                 avaliacao: 5.0,
                 numAvaliacoes: 150,
+                portfolio: ['ar1.jpg', 'ar2.webp', 'ar3.jpg'],
                 servicos: [
                     'Instalação de Ar-condicionado',
                     'Limpeza e higienização',
@@ -260,6 +265,7 @@
                 foto: 'image/eletricista3.jpg',
                 avaliacao: 4.9,
                 numAvaliacoes: 87,
+                portfolio: ['manu1.jpg', 'manu2.jpg', 'manu3.jpg'],
                 servicos: [
                     'Instalação de sistemas fotovoltaicos residenciais',
                     'Manutenção e limpeza de painéis solares',
@@ -288,6 +294,7 @@
                 foto: 'image/eletricista4.jpg',
                 avaliacao: 4.8,
                 numAvaliacoes: 104,
+                portfolio: ['manu1.jpg', 'manu2.jpg', 'manu3.jpg'],
                 servicos: [
                     'Instalação de câmeras de segurança residenciais e comerciais',
                     'Configuração de sistemas de monitoramento remoto',
@@ -396,6 +403,23 @@
             // Atualizar lista de serviços
             const servicesList = document.querySelector('.services-section ul');
             servicesList.innerHTML = profData.servicos.map(service => `<li>${service}</li>`).join('');
+
+            // Atualizar portfólio
+            if (profData.portfolio) {
+                const portfolioSection = document.createElement('div');
+                portfolioSection.className = 'portfolio-section';
+                portfolioSection.innerHTML = `
+                    <h2>Portfólio</h2>
+                    <div class="portfolio-grid">
+                        ${profData.portfolio.map(img => `
+                            <div class="portfolio-item">
+                                <img src="image/${img}" alt="Trabalho realizado">
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                document.querySelector('.services-section').insertAdjacentElement('afterend', portfolioSection);
+            }
 
             // Atualizar avaliações
             const reviewsSection = document.querySelector('.reviews-section');
